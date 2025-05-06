@@ -164,3 +164,62 @@ material GaussianNoiseDepth
   }
 }
 
+// https://github.com/OGRECave/ogre-next/blob/master/Samples/Media/2.0/scripts/materials/Common/Quad.program
+
+vertex_program Quad_vs glsl
+{
+	source Quad_vs.glsl
+}
+
+fragment_program BlurV_ps glsl
+{
+	source BlurV_ps.glsl
+}
+fragment_program BlurH_ps glsl
+{
+	source BlurH_ps.glsl
+}
+
+//Blur: Horizontal Gaussian pass
+material BlurH
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+
+			cull_hardware none
+
+			vertex_program_ref Quad_vs
+			{
+			}
+
+			fragment_program_ref BlurH_ps
+			{
+			}
+
+			texture_unit
+			{
+				tex_address_mode clamp
+				filtering bilinear
+			}
+		}
+	}
+}
+
+//Blur: Vertical Gaussian pass
+material BlurV : BlurH
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref BlurV_ps
+			{
+			}
+		}
+	}
+}
+
