@@ -27,6 +27,7 @@ fragment_program GaussianNoiseFS_GLSL glsl
   default_params
   {
     param_named RT int 0
+    param_named Blur1 int 1
   }
 }
 
@@ -72,12 +73,12 @@ fragment_program GaussianNoiseFS unified
   delegate GaussianNoiseFS_Metal
   delegate GaussianNoiseFS_VK
 
-  default_params
-  {
-    param_named mean float 0.0
-    param_named stddev float 1.0
-    param_named offsets float3 0.0 0.0 0.0
-  }
+  // default_params
+  // {
+  //   param_named mean float 0.0
+  //   param_named stddev float 1.0
+  //   param_named offsets float3 0.0 0.0 0.0
+  // }
 }
 
 material GaussianNoise
@@ -98,6 +99,13 @@ material GaussianNoise
         tex_coord_set 0
         tex_address_mode clamp
         filtering linear linear linear
+      }
+      texture_unit Blur1
+      {
+        tex_coord_set 0
+        tex_address_mode clamp
+        // filtering linear linear linear
+        filtering bilinear
       }
     }
   }

@@ -19,10 +19,17 @@
 
 // The input texture, which is set up by the Ogre Compositor infrastructure.
 vulkan_layout( ogre_t0 ) uniform texture2D RT;
-vulkan( layout( ogre_s0 ) uniform sampler texSampler );
+vulkan_layout( ogre_t1 ) uniform texture2D Blur1;
+
+vulkan( layout( ogre_s0 ) uniform sampler samplerState );
 
 // Other parameters are set in C++, via
 // Ogre::GpuProgramParameters::setNamedConstant()
+
+// vulkan( layout( ogre_P0 ) uniform Params { )
+// 	uniform float OriginalImageWeight;
+// 	uniform float BlurWeight;
+// vulkan( }; )
 
 // input params from vertex shader
 vulkan_layout( location = 0 )
@@ -37,5 +44,17 @@ out vec4 fragColor;
 
 void main()
 {
-  fragColor = clamp(0.2 * texture(vkSampler2D(RT,texSampler), inPs.uv0.xy) + 0.8 * vec4(0, 0.2, 0.5, 0.0), 0.0, 1.0);
+  float c1 = 0.0037;
+  float c2 = 0.0016;
+  
+  float depth = 5.0;
+  
+  vec4 sharp	= texture( vkSampler2D( RT, samplerState ), inPs.uv0 );
+	vec4 blur	= texture( vkSampler2D( Blur1, samplerState ), inPs.uv0 );
+
+  float f = min(saturate(1 / exp(pow(depth * c1, 2))), 0.5);
+	float blur = saturate(1 / exp(pow(depth * c2, 2)));
+	
+  vec4 sceneColor = blur * sharp + (1-blur) * blur;
+	fragColor = clamp(f * sharp + (1-f) * vec4(0, 0.2, 0.5, 0.0), 0.0, 1.0);
 }
