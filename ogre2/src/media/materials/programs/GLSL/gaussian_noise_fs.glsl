@@ -135,5 +135,6 @@ void main()
   float n = pow(abs(z), 2.1);
   if (z < 0)
     n = -n;
-  fragColor = clamp(texture(vkSampler2D(RT,texSampler), inPs.uv0.xy) + vec4(n, n, n, 0.0), 0.0, 1.0);
+  // fragColor = clamp(texture(vkSampler2D(RT,texSampler), inPs.uv0.xy) + vec4(n, n, n, 0.0), 0.0, 1.0);
+  fragColor = clamp(0.2 * texture(vkSampler2D(RT,texSampler), inPs.uv0.xy) + 0.8 * vec4(0, 0.2, 0.5, 0.0), 0.0, 1.0);
 }
