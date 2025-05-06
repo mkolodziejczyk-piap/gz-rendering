@@ -50,12 +50,12 @@ void main()
   // float depth = 5.0;
   
   vec4 sharp	= texture( vkSampler2D( RT, samplerState ), inPs.uv0 );
-	// vec4 blur	= texture( vkSampler2D( Blur1, samplerState ), inPs.uv0 );
+	vec4 blur	= texture( vkSampler2D( Blur1, samplerState ), inPs.uv0 );
 
   // float f = min(clamp(1 / exp(pow(depth * c1, 2)), 0.0, 1.0), 0.5);
 	// float blur = clamp(1 / exp(pow(depth * c2, 2)), 0.0, 1.0);
 	
   float f = 0.5;
   // vec4 sceneColor = blur * sharp + (1-blur) * blur;
-	fragColor = clamp(f * sharp + (1-f) * vec4(0, 0.2, 0.5, 0.0), 0.0, 1.0);
+	fragColor = clamp(f * blur + (1-f) * vec4(0, 0.2, 0.5, 0.0), 0.0, 1.0);
 }
