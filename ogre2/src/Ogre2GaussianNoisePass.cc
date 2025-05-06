@@ -64,7 +64,7 @@ Ogre2GaussianNoisePass::~Ogre2GaussianNoisePass()
 //////////////////////////////////////////////////
 void Ogre2GaussianNoisePass::PreRender()
 {
-  if (!this->dataPtr->gaussianNoiseMat)
+  if (!this->dataPtr->FogMat)
     return;
 
   if (!this->enabled)
@@ -227,10 +227,10 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   rt1TexDef->widthFactor = 1;
   rt1TexDef->heightFactor = 1;
   rt1TexDef->format = Ogre::PFG_RGBA8_UNORM_SRGB;
-  rt1TexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
-  rt1TexDef->depthBufferId = Ogre::DepthBuffer::POOL_DEFAULT;
-  rt1TexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
-  rt1TexDef->fsaa = "0";   
+  // rt1TexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
+  // rt1TexDef->depthBufferId = Ogre::DepthBuffer::POOL_DEFAULT;
+  // rt1TexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
+  // rt1TexDef->fsaa = "0";   
 
   // rt_input target
   nodeDef->setNumTargetPass(2);
