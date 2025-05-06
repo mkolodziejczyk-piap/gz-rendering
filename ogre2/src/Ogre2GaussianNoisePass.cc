@@ -230,7 +230,11 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   // rt1TexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
   // rt1TexDef->depthBufferId = Ogre::DepthBuffer::POOL_DEFAULT;
   // rt1TexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
-  // rt1TexDef->fsaa = "0";   
+  // rt1TexDef->fsaa = "0";
+
+  Ogre::RenderTargetViewDef *rtvRt1 =
+    nodeDef->addRenderTextureView("rt1");
+  rtvRt1->setForTextureDefinition("rt1", rt1TexDef);   
 
   // rt_input target
   nodeDef->setNumTargetPass(2);
