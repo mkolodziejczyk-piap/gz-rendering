@@ -269,10 +269,10 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
         static_cast<Ogre::CompositorPassSceneDef *>(
         depthTargetDef->addPass(Ogre::PASS_SCENE));
     passScene->setAllLoadActions(Ogre::LoadAction::Clear);
-    passScene->setAllClearColours(Ogre::ColourValue(
-      this->FarClipPlane(),
-      this->FarClipPlane(),
-      this->FarClipPlane()));
+    // passScene->setAllClearColours(Ogre::ColourValue(
+    //   this->FarClipPlane(),
+    //   this->FarClipPlane(),
+    //   this->FarClipPlane()));
     // depth texture does not contain particles
     passScene->setVisibilityMask(
       GZ_VISIBILITY_ALL & ~Ogre2ParticleEmitter::kParticleVisibilityFlags);
