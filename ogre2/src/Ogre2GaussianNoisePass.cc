@@ -307,6 +307,8 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
     passQuad->addQuadTextureSource(0, "rt_input");
     passQuad->addQuadTextureSource(1, "depthTexture");
     passQuad->addQuadTextureSource(2, "rt1");
+    passQuad->mFrustumCorners =
+          Ogre::CompositorPassQuadDef::VIEW_SPACE_CORNERS;
   }
   nodeDef->mapOutputChannel(0, "rt_output");
   nodeDef->mapOutputChannel(1, "rt_input");
