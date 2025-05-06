@@ -28,7 +28,8 @@
 #include <Compositor/OgreCompositorManager2.h>
 #include <Compositor/OgreCompositorNodeDef.h>
 #include <Compositor/Pass/PassQuad/OgreCompositorPassQuadDef.h>
-// #include <Compositor/Pass/PassClear/OgreCompositorPassClearDef.h>
+#include <Compositor/Pass/PassClear/OgreCompositorPassClearDef.h>
+#include <Compositor/Pass/PassClear/OgreCompositorPassClearDef.h>
 #include <OgreMaterial.h>
 #include <OgreMaterialManager.h>
 #include <OgrePass.h>
@@ -257,7 +258,27 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   rtvRt1->setForTextureDefinition("rt1", rt1TexDef);   
 
   // rt_input target
-  nodeDef->setNumTargetPass(2);
+  nodeDef->setNumTargetPass(3);
+
+  Ogre::CompositorTargetDef *depthTargetDef =
+      nodeDef->addTargetPass("depthTexture");
+  depthTargetDef->setNumPasses(1);
+  {
+    // scene pass
+    Ogre::CompositorPassSceneDef *passScene =
+        static_cast<Ogre::CompositorPassSceneDef *>(
+        depthTargetDef->addPass(Ogre::PASS_SCENE));
+    passScene->setAllLoadActions(Ogre::LoadAction::Clear);
+    passScene->setAllClearColours(Ogre::ColourValue(
+      this->FarClipPlane(),
+      this->FarClipPlane(),
+      this->FarClipPlane()));
+    // depth texture does not contain particles
+    passScene->setVisibilityMask(
+      GZ_VISIBILITY_ALL & ~Ogre2ParticleEmitter::kParticleVisibilityFlags);
+    passScene->mEnableForwardPlus = false;
+    passScene->setLightVisibilityMask(0x0);
+  }
 
   // BlurH pass
   Ogre::CompositorTargetDef *blurHTargetDef =
