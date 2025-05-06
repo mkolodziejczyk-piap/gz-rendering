@@ -202,6 +202,25 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   nodeDef->addTextureSourceName("rt_output", 1,
       Ogre::TextureDefinitionBase::TEXTURE_INPUT);
 
+  Ogre::TextureDefinitionBase::TextureDefinition *depthTexDef =
+      nodeDef->addTextureDefinition("depthTexture");
+  depthTexDef->textureType = Ogre::TextureTypes::Type2D;
+  depthTexDef->width = 0;
+  depthTexDef->height = 0;
+  depthTexDef->depthOrSlices = 1;
+  depthTexDef->numMipmaps = 0;
+  depthTexDef->widthFactor = 1;
+  depthTexDef->heightFactor = 1;
+  depthTexDef->format = Ogre::PFG_D32_FLOAT;
+  depthTexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
+  depthTexDef->depthBufferId = Ogre::DepthBuffer::POOL_DEFAULT;
+  depthTexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
+  depthTexDef->fsaa = "0";
+
+  Ogre::RenderTargetViewDef *rtvDepth =
+    nodeDef->addRenderTextureView("depthTexture");
+  rtvDepth->setForTextureDefinition("depthTexture", depthTexDef );    
+
   // Ogre::TextureDefinitionBase::TextureDefinition *rt0TexDef =
   //     nodeDef->addTextureDefinition("rt0");
   // rt0TexDef->textureType = Ogre::TextureTypes::Type2D;
@@ -261,9 +280,11 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
     Ogre::CompositorPassQuadDef *passQuad =
         static_cast<Ogre::CompositorPassQuadDef *>(
         inputTargetDef->addPass(Ogre::PASS_QUAD));
+    passQuad->setAllLoadActions(Ogre::LoadAction::Clear);    
     passQuad->mMaterialName = materialName_Fog;
     passQuad->addQuadTextureSource(0, "rt_input");
-    passQuad->addQuadTextureSource(1, "rt1");
+    passQuad->addQuadTextureSource(1, "depthTexture");
+    passQuad->addQuadTextureSource(2, "rt1");
   }
   nodeDef->mapOutputChannel(0, "rt_output");
   nodeDef->mapOutputChannel(1, "rt_input");

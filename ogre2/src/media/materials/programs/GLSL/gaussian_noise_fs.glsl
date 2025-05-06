@@ -19,7 +19,8 @@
 
 // The input texture, which is set up by the Ogre Compositor infrastructure.
 vulkan_layout( ogre_t0 ) uniform texture2D RT;
-vulkan_layout( ogre_t1 ) uniform texture2D Blur1;
+vulkan_layout( ogre_t1 ) uniform texture2D depthTexture;
+vulkan_layout( ogre_t2 ) uniform texture2D Blur1;
 
 vulkan( layout( ogre_s0 ) uniform sampler samplerState );
 
@@ -47,7 +48,8 @@ void main()
   float c1 = 0.0037;
   float c2 = 0.0016;
   
-  float depth = 5.0;
+  // float depth = 5.0;
+  float depth = texture(vkSampler2D(depthTexture, samplerState), inPs.uv0).x;
   
   vec4 sharp	= texture( vkSampler2D( RT, samplerState ), inPs.uv0 );
 	vec4 blur	= texture( vkSampler2D( Blur1, samplerState ), inPs.uv0 );
