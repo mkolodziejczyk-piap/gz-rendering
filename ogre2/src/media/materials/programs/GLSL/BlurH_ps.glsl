@@ -47,13 +47,13 @@ void main()
 	vec4 retVal;
 
 	vec2 uv = inPs.uv0.xy;
-	uv.x += offsets[0] * 0.01;
+	uv.x += offsets[0] * 0.1;
 	vec4 sum = texture( vkSampler2D( Blur0, samplerState ), uv ) * samples[0];
 
 	for( int i=1; i<11; ++i )
 	{
 		uv = inPs.uv0.xy;
-		uv.x += offsets[i] * 0.01;
+		uv.x += offsets[i] * 0.1;
 		sum += texture( vkSampler2D( Blur0, samplerState ), uv ) * samples[i];
 	}
 
