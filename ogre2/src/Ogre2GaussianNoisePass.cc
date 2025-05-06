@@ -99,7 +99,7 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
 
   // The GaussianNoise material is defined in script (gaussian_noise.material).
   // clone the material
-  std::string matName = "BlurH";
+  // std::string matName = "BlurH";
   std::string matName = "GaussianNoise";  
   Ogre::MaterialPtr ogreMat =
       Ogre::MaterialManager::getSingleton().getByName(matName);
