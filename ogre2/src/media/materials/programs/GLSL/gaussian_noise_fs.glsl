@@ -45,7 +45,8 @@ out vec4 fragColor;
 
 void main()
 {
-  float c1 = 0.0037;
+  // float c1 = 0.0037;
+  float c1 = 0.1;
   float c2 = 0.0016;
   
   // float depth = 5.0;
