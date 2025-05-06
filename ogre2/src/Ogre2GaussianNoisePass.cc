@@ -28,6 +28,7 @@
 #include <Compositor/OgreCompositorManager2.h>
 #include <Compositor/OgreCompositorNodeDef.h>
 #include <Compositor/Pass/PassQuad/OgreCompositorPassQuadDef.h>
+// #include <Compositor/Pass/PassClear/OgreCompositorPassClearDef.h>
 #include <OgreMaterial.h>
 #include <OgreMaterialManager.h>
 #include <OgrePass.h>
@@ -213,7 +214,7 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   depthTexDef->heightFactor = 1;
   depthTexDef->format = Ogre::PFG_D32_FLOAT;
   depthTexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
-  depthTexDef->depthBufferId = Ogre::DepthBuffer::POOL_DEFAULT;
+  depthTexDef->depthBufferId = 1; //Ogre::DepthBuffer::POOL_DEFAULT;
   depthTexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
   depthTexDef->fsaa = "0";
 
