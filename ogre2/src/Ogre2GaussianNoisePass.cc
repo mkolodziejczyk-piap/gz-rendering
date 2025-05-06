@@ -274,8 +274,8 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
     //   this->FarClipPlane(),
     //   this->FarClipPlane()));
     // depth texture does not contain particles
-    passScene->setVisibilityMask(
-      GZ_VISIBILITY_ALL & ~Ogre2ParticleEmitter::kParticleVisibilityFlags);
+    // passScene->setVisibilityMask(
+    //   GZ_VISIBILITY_ALL & ~Ogre2ParticleEmitter::kParticleVisibilityFlags);
     passScene->mEnableForwardPlus = false;
     passScene->setLightVisibilityMask(0x0);
   }
