@@ -235,6 +235,7 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   // rt_input target
   nodeDef->setNumTargetPass(2);
 
+  // BlurH pass
   Ogre::CompositorTargetDef *blurHTargetDef =
         nodeDef->addTargetPass("rt1");
   blurHTargetDef->setNumPasses(1);
@@ -242,11 +243,12 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
     // quad pass
     Ogre::CompositorPassQuadDef *passQuad =
         static_cast<Ogre::CompositorPassQuadDef *>(
-        inputTargetDef->addPass(Ogre::PASS_QUAD));
+        blurHTargetDef->addPass(Ogre::PASS_QUAD));
     passQuad->mMaterialName = materialName_BlurH;
     passQuad->addQuadTextureSource(0, "rt_input");
   }
 
+  // Fog pass
   Ogre::CompositorTargetDef *inputTargetDef =
       nodeDef->addTargetPass("rt_output");
   inputTargetDef->setNumPasses(1);
