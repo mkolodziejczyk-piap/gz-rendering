@@ -171,14 +171,14 @@ vertex_program Quad_vs_GLSL glsl
 	source Quad_vs.glsl
 }
 
-// fragment_program BlurV_ps_GLSL glsl
-// {
-// 	source BlurV_ps.glsl
-//   default_params
-//   {
-//     param_named RT int 0
-//   }
-// }
+fragment_program BlurV_ps_GLSL glsl
+{
+	source BlurV_ps.glsl
+  default_params
+  {
+    param_named RT int 0
+  }
+}
 fragment_program BlurH_ps_GLSL glsl
 {
 	source BlurH_ps.glsl
@@ -194,10 +194,10 @@ vertex_program Quad_vs_VK glsl
 	source Quad_vs.glsl
 }
 
-// fragment_program BlurV_ps_VK glsl
-// {
-// 	source BlurV_ps.glsl
-// }
+fragment_program BlurV_ps_VK glsl
+{
+	source BlurV_ps.glsl
+}
 fragment_program BlurH_ps_VK glsl
 {
 	source BlurH_ps.glsl
@@ -219,6 +219,13 @@ fragment_program BlurHFS unified
 {
   delegate BlurH_ps_GLSL
   delegate BlurH_ps_VK
+
+}
+
+fragment_program BlurVFS unified
+{
+  delegate BlurV_ps_GLSL
+  delegate BlurV_ps_VK
 
 }
 
@@ -252,17 +259,17 @@ material BlurH
 	}
 }
 
-// //Blur: Vertical Gaussian pass
-// material BlurV : BlurH
-// {
-// 	technique
-// 	{
-// 		pass
-// 		{
-// 			fragment_program_ref BlurV_ps
-// 			{
-// 			}
-// 		}
-// 	}
-// }
+//Blur: Vertical Gaussian pass
+material BlurV : BlurH
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref BlurVFS
+			{
+			}
+		}
+	}
+}
 

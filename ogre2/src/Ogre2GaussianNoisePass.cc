@@ -42,7 +42,9 @@
 class gz::rendering::Ogre2GaussianNoisePassPrivate
 {
   /// brief Pointer to the Gaussian noise ogre material
-  public: Ogre::Material *gaussianNoiseMat = nullptr;
+  public: Ogre::Material *BlurHMat = nullptr;
+  public: Ogre::Material *BlurVMat = nullptr;
+  public: Ogre::Material *FogMat = nullptr;
 };
 
 using namespace gz;
@@ -99,24 +101,56 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
 
   // The GaussianNoise material is defined in script (gaussian_noise.material).
   // clone the material
-  std::string matName = "BlurH";
-  // std::string matName = "GaussianNoise";  
-  Ogre::MaterialPtr ogreMat =
-      Ogre::MaterialManager::getSingleton().getByName(matName);
-  if (!ogreMat)
+  std::string matName_BlurH = "BlurH";
+  std::string matName_BlurV = "BlurV";
+  // std::string matName_Fog = "Fog";
+  std::string matName_Fog = "GaussianNoise";
+
+  Ogre::MaterialPtr ogreMat_BlurH =
+      Ogre::MaterialManager::getSingleton().getByName(matName_BlurH);
+  Ogre::MaterialPtr ogreMat_BlurV =
+      Ogre::MaterialManager::getSingleton().getByName(matName_BlurV);
+  Ogre::MaterialPtr ogreMat_Fog =
+      Ogre::MaterialManager::getSingleton().getByName(matName_Fog);
+
+  if (!ogreMat_BlurH)
   {
-    gzerr << "Gaussian noise material not found: '" << matName << "'"
+    gzerr << "BlurH material not found: '" << matName_BlurH << "'"
            << std::endl;
     return;
   }
-  if (!ogreMat->isLoaded())
-    ogreMat->load();
+  if (!ogreMat_BlurV)
+  {
+    gzerr << "BlurV material not found: '" << matName_BlurV << "'"
+           << std::endl;
+    return;
+  }
+  if (!ogreMat_Fog)
+  {
+    gzerr << "Fog material not found: '" << matName_Fog << "'"
+           << std::endl;
+    return;
+  }
+
+  if (!ogreMat_BlurH->isLoaded())
+    ogreMat_BlurH->load();
+  if (!ogreMat_BlurV->isLoaded())
+    ogreMat_BlurV->load();
+  if (!ogreMat_Fog->isLoaded())
+    ogreMat_Fog->load();  
 
   static int gaussianNodeCounter = 0;
 
-  std::string materialName = matName + "_" +
+  std::string materialName_BlurH = matName_BlurH + "_" +
       std::to_string(gaussianNodeCounter);
-  this->dataPtr->gaussianNoiseMat = ogreMat->clone(materialName).get();
+  std::string materialName_BlurV = matName_BlurV + "_" +
+      std::to_string(gaussianNodeCounter);
+  std::string materialName_Fog = matName_Fog + "_" +
+      std::to_string(gaussianNodeCounter);
+
+  this->dataPtr->BlurHMat = ogreMat_BlurH->clone(materialName_BlurH).get();
+  this->dataPtr->BlurVMat = ogreMat_BlurV->clone(materialName_BlurV).get();
+  this->dataPtr->FogMat = ogreMat_Fog->clone(materialName_Fog).get();
 
   // create the compostior node definition
 
@@ -168,8 +202,51 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   nodeDef->addTextureSourceName("rt_output", 1,
       Ogre::TextureDefinitionBase::TEXTURE_INPUT);
 
+  // Ogre::TextureDefinitionBase::TextureDefinition *rt0TexDef =
+  //     nodeDef->addTextureDefinition("rt0");
+  // rt0TexDef->textureType = Ogre::TextureTypes::Type2D;
+  // rt0TexDef->width = 0;
+  // rt0TexDef->height = 0;
+  // rt0TexDef->depthOrSlices = 1;
+  // rt0TexDef->numMipmaps = 0;
+  // rt0TexDef->widthFactor = 1;
+  // rt0TexDef->heightFactor = 1;
+  // rt0TexDef->format = Ogre::PFG_RGBA8_UNORM_SRGB;
+  // rt0TexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
+  // rt0TexDef->depthBufferId = Ogre::DepthBuffer::POOL_DEFAULT;
+  // rt0TexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
+  // rt0TexDef->fsaa = "0";
+
+  Ogre::TextureDefinitionBase::TextureDefinition *rt1TexDef =
+      nodeDef->addTextureDefinition("rt1");
+  rt1TexDef->textureType = Ogre::TextureTypes::Type2D;
+  rt1TexDef->width = 0;
+  rt1TexDef->height = 0;
+  rt1TexDef->depthOrSlices = 1;
+  rt1TexDef->numMipmaps = 0;
+  rt1TexDef->widthFactor = 1;
+  rt1TexDef->heightFactor = 1;
+  rt1TexDef->format = Ogre::PFG_RGBA8_UNORM_SRGB;
+  rt1TexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
+  rt1TexDef->depthBufferId = Ogre::DepthBuffer::POOL_DEFAULT;
+  rt1TexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
+  rt1TexDef->fsaa = "0";   
+
   // rt_input target
-  nodeDef->setNumTargetPass(1);
+  nodeDef->setNumTargetPass(2);
+
+  Ogre::CompositorTargetDef *blurHTargetDef =
+        nodeDef->addTargetPass("rt1");
+  blurHTargetDef->setNumPasses(1);
+  {
+    // quad pass
+    Ogre::CompositorPassQuadDef *passQuad =
+        static_cast<Ogre::CompositorPassQuadDef *>(
+        inputTargetDef->addPass(Ogre::PASS_QUAD));
+    passQuad->mMaterialName = materialName_BlurH;
+    passQuad->addQuadTextureSource(0, "rt_input");
+  }
+
   Ogre::CompositorTargetDef *inputTargetDef =
       nodeDef->addTargetPass("rt_output");
   inputTargetDef->setNumPasses(1);
@@ -178,8 +255,8 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
     Ogre::CompositorPassQuadDef *passQuad =
         static_cast<Ogre::CompositorPassQuadDef *>(
         inputTargetDef->addPass(Ogre::PASS_QUAD));
-    passQuad->mMaterialName = materialName;
-    passQuad->addQuadTextureSource(0, "rt_input");
+    passQuad->mMaterialName = materialName_Fog;
+    passQuad->addQuadTextureSource(0, "rt1");
   }
   nodeDef->mapOutputChannel(0, "rt_output");
   nodeDef->mapOutputChannel(1, "rt_input");
