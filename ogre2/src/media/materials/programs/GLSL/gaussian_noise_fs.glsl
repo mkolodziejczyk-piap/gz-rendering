@@ -49,7 +49,7 @@ void main()
   // float c1 = 0.1;
   float c2 = 0.0016;
   
-  float depth = 5.0;
+  float depth = 1.0;
   // float depth = texture(vkSampler2D(depthTexture, samplerState), inPs.uv0).x;
   
   vec4 sharp	= texture( vkSampler2D( RT, samplerState ), inPs.uv0 );
@@ -61,6 +61,6 @@ void main()
   // float cd = depth;
 	
   vec4 sceneColor = cb * sharp + (1-cb) * blur;
-	fragColor = clamp(cd * sceneColor + (1-cd) * vec4(0, 0.3, 0.6, 0.0), 0.0, 1.0);
+	fragColor = clamp(cd * sceneColor + (1-cd) * vec4(0, 0.2, 0.4, 0.0), 0.0, 1.0);
   // fragColor = clamp(vec4(0, 0, depth, 0.0), 0.0, 1.0);
 }
