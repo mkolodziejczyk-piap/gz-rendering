@@ -61,6 +61,6 @@ void main()
   // float cd = depth;
 	
   vec4 sceneColor = cb * sharp + (1-cb) * blur;
-	fragColor = clamp(cd * sceneColor + (1-cd) * vec4(0, 0.1, 0.2, 0.0), 0.0, 1.0);
+	fragColor = clamp(cd * sceneColor + (1-cd) * vec4(0, 0.2, 0.4, 0.0), 0.0, 1.0);
   // fragColor = clamp(vec4(0, 0, depth, 0.0), 0.0, 1.0);
 }
