@@ -204,25 +204,25 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   nodeDef->addTextureSourceName("rt_output", 1,
       Ogre::TextureDefinitionBase::TEXTURE_INPUT);
 
-  Ogre::TextureDefinitionBase::TextureDefinition *depthTexDef =
-      nodeDef->addTextureDefinition("depthTexture");
-  depthTexDef->textureType = Ogre::TextureTypes::Type2D;
-  depthTexDef->width = 0;
-  depthTexDef->height = 0;
-  depthTexDef->depthOrSlices = 1;
-  depthTexDef->numMipmaps = 0;
-  depthTexDef->widthFactor = 1;
-  depthTexDef->heightFactor = 1;
-  depthTexDef->format = Ogre::PFG_D32_FLOAT;
-  depthTexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
-  depthTexDef->depthBufferId = 1; //Ogre::DepthBuffer::POOL_DEFAULT;
-  depthTexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
-  depthTexDef->fsaa = "0";
+  // Ogre::TextureDefinitionBase::TextureDefinition *depthTexDef =
+  //     nodeDef->addTextureDefinition("depthTexture");
+  // depthTexDef->textureType = Ogre::TextureTypes::Type2D;
+  // depthTexDef->width = 0;
+  // depthTexDef->height = 0;
+  // depthTexDef->depthOrSlices = 1;
+  // depthTexDef->numMipmaps = 0;
+  // depthTexDef->widthFactor = 1;
+  // depthTexDef->heightFactor = 1;
+  // depthTexDef->format = Ogre::PFG_D32_FLOAT;
+  // depthTexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
+  // depthTexDef->depthBufferId = 1; //Ogre::DepthBuffer::POOL_DEFAULT;
+  // depthTexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
+  // depthTexDef->fsaa = "0";
 
-  Ogre::RenderTargetViewDef *rtvDepth =
-    nodeDef->addRenderTextureView("depthTexture");
-  rtvDepth->setForTextureDefinition("depthTexture", depthTexDef );
-  rtvDepth->depthAttachment.textureName = "depthTexture";    
+  // Ogre::RenderTargetViewDef *rtvDepth =
+  //   nodeDef->addRenderTextureView("depthTexture");
+  // rtvDepth->setForTextureDefinition("depthTexture", depthTexDef );
+  // rtvDepth->depthAttachment.textureName = "depthTexture";    
 
   // Ogre::TextureDefinitionBase::TextureDefinition *rt0TexDef =
   //     nodeDef->addTextureDefinition("rt0");
@@ -259,27 +259,28 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   rtvRt1->setForTextureDefinition("rt1", rt1TexDef);   
 
   // rt_input target
-  nodeDef->setNumTargetPass(3);
+  nodeDef->setNumTargetPass(2);
+  // nodeDef->setNumTargetPass(3);
 
-  Ogre::CompositorTargetDef *depthTargetDef =
-      nodeDef->addTargetPass("depthTexture");
-  depthTargetDef->setNumPasses(1);
-  {
-    // scene pass
-    Ogre::CompositorPassSceneDef *passScene =
-        static_cast<Ogre::CompositorPassSceneDef *>(
-        depthTargetDef->addPass(Ogre::PASS_SCENE));
-    passScene->setAllLoadActions(Ogre::LoadAction::Clear);
-    // passScene->setAllClearColours(Ogre::ColourValue(
-    //   this->FarClipPlane(),
-    //   this->FarClipPlane(),
-    //   this->FarClipPlane()));
-    // depth texture does not contain particles
-    // passScene->setVisibilityMask(
-    //   GZ_VISIBILITY_ALL & ~Ogre2ParticleEmitter::kParticleVisibilityFlags);
-    passScene->mEnableForwardPlus = false;
-    passScene->setLightVisibilityMask(0x0);
-  }
+  // Ogre::CompositorTargetDef *depthTargetDef =
+  //     nodeDef->addTargetPass("depthTexture");
+  // depthTargetDef->setNumPasses(1);
+  // {
+  //   // scene pass
+  //   Ogre::CompositorPassSceneDef *passScene =
+  //       static_cast<Ogre::CompositorPassSceneDef *>(
+  //       depthTargetDef->addPass(Ogre::PASS_SCENE));
+  //   passScene->setAllLoadActions(Ogre::LoadAction::Clear);
+  //   // passScene->setAllClearColours(Ogre::ColourValue(
+  //   //   this->FarClipPlane(),
+  //   //   this->FarClipPlane(),
+  //   //   this->FarClipPlane()));
+  //   // depth texture does not contain particles
+  //   // passScene->setVisibilityMask(
+  //   //   GZ_VISIBILITY_ALL & ~Ogre2ParticleEmitter::kParticleVisibilityFlags);
+  //   passScene->mEnableForwardPlus = false;
+  //   passScene->setLightVisibilityMask(0x0);
+  // }
 
   // BlurH pass
   Ogre::CompositorTargetDef *blurHTargetDef =
@@ -306,8 +307,9 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
     passQuad->setAllLoadActions(Ogre::LoadAction::Clear);    
     passQuad->mMaterialName = materialName_Fog;
     passQuad->addQuadTextureSource(0, "rt_input");
-    passQuad->addQuadTextureSource(1, "depthTexture");
-    passQuad->addQuadTextureSource(2, "rt1");
+    // passQuad->addQuadTextureSource(1, "depthTexture");
+    passQuad->addQuadTextureSource(1, "rt1");
+    // passQuad->addQuadTextureSource(2, "rt1");
     passQuad->mFrustumCorners =
           Ogre::CompositorPassQuadDef::VIEW_SPACE_CORNERS;
   }
