@@ -19,7 +19,7 @@
 
 // The input texture, which is set up by the Ogre Compositor infrastructure.
 vulkan_layout( ogre_t0 ) uniform texture2D RT;
-//vulkan_layout( ogre_t1 ) uniform texture2D depthTexture;
+vulkan_layout( ogre_t1 ) uniform texture2D depthTexture;
 vulkan_layout( ogre_t2 ) uniform texture2D Blur1;
 
 vulkan( layout( ogre_s0 ) uniform sampler samplerState );
