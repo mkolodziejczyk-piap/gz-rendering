@@ -28,6 +28,7 @@ fragment_program GaussianNoiseFS_GLSL glsl
   {
     param_named RT int 0
     param_named Blur1 int 1
+    param_named depthTexture int 2
   }
 }
 

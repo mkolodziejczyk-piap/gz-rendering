@@ -204,25 +204,25 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   nodeDef->addTextureSourceName("rt_output", 1,
       Ogre::TextureDefinitionBase::TEXTURE_INPUT);
 
-  // Ogre::TextureDefinitionBase::TextureDefinition *depthTexDef =
-  //     nodeDef->addTextureDefinition("depthTexture");
-  // depthTexDef->textureType = Ogre::TextureTypes::Type2D;
-  // depthTexDef->width = 0;
-  // depthTexDef->height = 0;
-  // depthTexDef->depthOrSlices = 1;
-  // depthTexDef->numMipmaps = 0;
-  // depthTexDef->widthFactor = 1;
-  // depthTexDef->heightFactor = 1;
-  // depthTexDef->format = Ogre::PFG_D32_FLOAT;
-  // depthTexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
-  // depthTexDef->depthBufferId = 1; //Ogre::DepthBuffer::POOL_DEFAULT;
-  // depthTexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
-  // depthTexDef->fsaa = "0";
+  Ogre::TextureDefinitionBase::TextureDefinition *depthTexDef =
+      nodeDef->addTextureDefinition("depthTexture");
+  depthTexDef->textureType = Ogre::TextureTypes::Type2D;
+  depthTexDef->width = 0;
+  depthTexDef->height = 0;
+  depthTexDef->depthOrSlices = 1;
+  depthTexDef->numMipmaps = 0;
+  depthTexDef->widthFactor = 1;
+  depthTexDef->heightFactor = 1;
+  depthTexDef->format = Ogre::PFG_D32_FLOAT;
+  depthTexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
+  depthTexDef->depthBufferId = 1; //Ogre::DepthBuffer::POOL_DEFAULT;
+  depthTexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
+  depthTexDef->fsaa = "0";
 
-  // Ogre::RenderTargetViewDef *rtvDepth =
-  //   nodeDef->addRenderTextureView("depthTexture");
-  // rtvDepth->setForTextureDefinition("depthTexture", depthTexDef );
-  // rtvDepth->depthAttachment.textureName = "depthTexture";    
+  Ogre::RenderTargetViewDef *rtvDepth =
+    nodeDef->addRenderTextureView("depthTexture");
+  rtvDepth->setForTextureDefinition("depthTexture", depthTexDef );
+  rtvDepth->depthAttachment.textureName = "depthTexture";    
 
   // Ogre::TextureDefinitionBase::TextureDefinition *rt0TexDef =
   //     nodeDef->addTextureDefinition("rt0");
