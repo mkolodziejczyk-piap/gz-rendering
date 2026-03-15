@@ -19,8 +19,9 @@
 
 // The input texture, which is set up by the Ogre Compositor infrastructure.
 vulkan_layout( ogre_t0 ) uniform texture2D RT;
-vulkan_layout( ogre_t1 ) uniform texture2D depthTexture;
-vulkan_layout( ogre_t2 ) uniform texture2D Blur1;
+// vulkan_layout( ogre_t1 ) uniform texture2D depthTexture;
+vulkan_layout( ogre_t1 ) uniform texture2D Blur1;
+vulkan_layout( ogre_t2 ) uniform texture2D depthTexture;
 
 vulkan( layout( ogre_s0 ) uniform sampler samplerState );
 
@@ -61,6 +62,6 @@ void main()
   // float cd = depth;
 	
   vec4 sceneColor = cb * sharp + (1-cb) * blur;
-	// fragColor = clamp(cd * sceneColor + (1-cd) * vec4(0, 0.2, 0.4, 0.0), 0.0, 1.0);
-  fragColor = clamp(vec4(0, 0, 1/depth, 0.0), 0.0, 1.0);
+	fragColor = clamp(cd * sceneColor + (1-cd) * vec4(0, 0.2, 0.4, 0.0), 0.0, 1.0);
+  // fragColor = clamp(vec4(0, 0, 1/depth, 0.0), 0.0, 1.0);
 }
