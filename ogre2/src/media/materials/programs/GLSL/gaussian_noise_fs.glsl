@@ -49,8 +49,8 @@ void main()
   // float c1 = 0.1;
   float c2 = 0.0016;
   
-  float depth = 1.0;
-  // float depth = texture(vkSampler2D(depthTexture, samplerState), inPs.uv0).x;
+  // float depth = 1.0;
+  float depth = texture(vkSampler2D(depthTexture, samplerState), inPs.uv0).x;
   
   vec4 sharp	= texture( vkSampler2D( RT, samplerState ), inPs.uv0 );
 	vec4 blur	= texture( vkSampler2D( Blur1, samplerState ), inPs.uv0 );
