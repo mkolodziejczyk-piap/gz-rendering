@@ -36,6 +36,11 @@
 #include <OgreRoot.h>
 #include <OgreTechnique.h>
 #include <OgreVector3.h>
+
+#include <Compositor/OgreCompositorWorkspace.h>
+#include <OgreSceneManager.h>
+
+
 #ifdef _MSC_VER
   #pragma warning(pop)
 #endif
