@@ -193,7 +193,7 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   //   out 1 rt_input
   // }
 
-  this->Scene()->SensorCount();
+  // this->Scene()->SensorCount();
 
   auto engine = Ogre2RenderEngine::Instance();
   auto ogreRoot = engine->OgreRoot();
