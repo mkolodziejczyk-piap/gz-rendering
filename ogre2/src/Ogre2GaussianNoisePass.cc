@@ -245,6 +245,7 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
     nodeDef->addRenderTextureView("depthTexture");
   rtvDepth->setForTextureDefinition("depthTexture", depthTexDef );
   rtvDepth->depthAttachment.textureName = "depthTexture";    
+  rtvDepth->preferDepthTexture = true; 
 
   // Ogre::TextureDefinitionBase::TextureDefinition *rt0TexDef =
   //     nodeDef->addTextureDefinition("rt0");
