@@ -197,6 +197,11 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
 
   auto engine = Ogre2RenderEngine::Instance();
   auto ogreRoot = engine->OgreRoot();
+
+  const Ogre::Camera *camera =
+      ogreRoot->_getCurrentSceneManager()->getCamerasInProgress().renderingCamera;
+
+
   Ogre::CompositorManager2 *ogreCompMgr = ogreRoot->getCompositorManager2();
 
   std::string nodeDefName = "GaussianNoiseNodeNode_"
