@@ -234,6 +234,7 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   depthTexDef->heightFactor = 1;
   depthTexDef->format = Ogre::PFG_D32_FLOAT;
   depthTexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
+  depthTexDef->textureFlags &= ~Ogre::TextureFlags::DiscardableContent;  
   depthTexDef->depthBufferId = 1; //Ogre::DepthBuffer::POOL_DEFAULT;
   // depthTexDef->depthBufferId = Ogre::DepthBuffer::POOL_DEFAULT;
   depthTexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
