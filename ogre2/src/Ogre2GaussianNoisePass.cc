@@ -234,15 +234,16 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   depthTexDef->heightFactor = 1;
   depthTexDef->format = Ogre::PFG_D32_FLOAT;
   depthTexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
-  // depthTexDef->depthBufferId = 1; //Ogre::DepthBuffer::POOL_DEFAULT;
+  depthTexDef->depthBufferId = 1; //Ogre::DepthBuffer::POOL_DEFAULT;
   // depthTexDef->depthBufferId = Ogre::DepthBuffer::POOL_DEFAULT;
   depthTexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
   depthTexDef->fsaa = "0";
+  // keep_content
 
   Ogre::RenderTargetViewDef *rtvDepth =
     nodeDef->addRenderTextureView("depthTexture");
   rtvDepth->setForTextureDefinition("depthTexture", depthTexDef );
-  rtvDepth->depthAttachment.textureName = "depthTexture";    
+  // rtvDepth->depthAttachment.textureName = "depthTexture";    
 
   // Ogre::TextureDefinitionBase::TextureDefinition *rt0TexDef =
   //     nodeDef->addTextureDefinition("rt0");
