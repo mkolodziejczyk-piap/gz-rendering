@@ -88,9 +88,9 @@ material GaussianNoise
   {
     pass
     {
-      depth_check off
-      depth_write off
-      cull_hardware none
+      // depth_check off
+      // depth_write off
+      // cull_hardware none
 
       vertex_program_ref GaussianNoiseVS { }
       fragment_program_ref GaussianNoiseFS { }

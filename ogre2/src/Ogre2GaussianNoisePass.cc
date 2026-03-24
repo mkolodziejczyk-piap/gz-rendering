@@ -52,6 +52,9 @@ class gz::rendering::Ogre2GaussianNoisePassPrivate
   public: Ogre::Material *BlurHMat = nullptr;
   public: Ogre::Material *BlurVMat = nullptr;
   public: Ogre::Material *FogMat = nullptr;
+
+  double projectionA;
+  double projectionB;
 };
 
 using namespace gz;
@@ -190,6 +193,8 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   //   out 1 rt_input
   // }
 
+  this->Scene()->SensorCount();
+
   auto engine = Ogre2RenderEngine::Instance();
   auto ogreRoot = engine->OgreRoot();
   Ogre::CompositorManager2 *ogreCompMgr = ogreRoot->getCompositorManager2();
@@ -220,7 +225,7 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   depthTexDef->heightFactor = 1;
   depthTexDef->format = Ogre::PFG_D32_FLOAT;
   depthTexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
-  depthTexDef->depthBufferId = 1; //Ogre::DepthBuffer::POOL_DEFAULT;
+  // depthTexDef->depthBufferId = 1; //Ogre::DepthBuffer::POOL_DEFAULT;
   // depthTexDef->depthBufferId = Ogre::DepthBuffer::POOL_DEFAULT;
   depthTexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
   depthTexDef->fsaa = "0";
