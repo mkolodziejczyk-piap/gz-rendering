@@ -262,24 +262,24 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   // rt0TexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
   // rt0TexDef->fsaa = "0";
 
-  // Ogre::TextureDefinitionBase::TextureDefinition *rt1TexDef =
-  //     nodeDef->addTextureDefinition("rt1");
-  // rt1TexDef->textureType = Ogre::TextureTypes::Type2D;
-  // rt1TexDef->width = 0;
-  // rt1TexDef->height = 0;
-  // rt1TexDef->depthOrSlices = 1;
-  // rt1TexDef->numMipmaps = 0;
-  // rt1TexDef->widthFactor = 1;
-  // rt1TexDef->heightFactor = 1;
-  // rt1TexDef->format = Ogre::PFG_RGBA8_UNORM_SRGB;
-  // // rt1TexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
-  // // rt1TexDef->depthBufferId = Ogre::DepthBuffer::POOL_DEFAULT;
-  // // rt1TexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
-  // // rt1TexDef->fsaa = "0";
+  Ogre::TextureDefinitionBase::TextureDefinition *rt1TexDef =
+      nodeDef->addTextureDefinition("rt1");
+  rt1TexDef->textureType = Ogre::TextureTypes::Type2D;
+  rt1TexDef->width = 0;
+  rt1TexDef->height = 0;
+  rt1TexDef->depthOrSlices = 1;
+  rt1TexDef->numMipmaps = 0;
+  rt1TexDef->widthFactor = 1;
+  rt1TexDef->heightFactor = 1;
+  rt1TexDef->format = Ogre::PFG_RGBA8_UNORM_SRGB;
+  // rt1TexDef->textureFlags &= ~Ogre::TextureFlags::Uav;
+  // rt1TexDef->depthBufferId = Ogre::DepthBuffer::POOL_DEFAULT;
+  // rt1TexDef->depthBufferFormat = Ogre::PFG_UNKNOWN;
+  // rt1TexDef->fsaa = "0";
 
-  // Ogre::RenderTargetViewDef *rtvRt1 =
-  //   nodeDef->addRenderTextureView("rt1");
-  // rtvRt1->setForTextureDefinition("rt1", rt1TexDef);   
+  Ogre::RenderTargetViewDef *rtvRt1 =
+    nodeDef->addRenderTextureView("rt1");
+  rtvRt1->setForTextureDefinition("rt1", rt1TexDef);   
 
   // rt_input target
   // nodeDef->setNumTargetPass(2);
