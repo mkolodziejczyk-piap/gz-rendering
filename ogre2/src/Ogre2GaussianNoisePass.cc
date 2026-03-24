@@ -201,6 +201,8 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   const Ogre::Camera *camera =
       ogreRoot->_getCurrentSceneManager()->getCamerasInProgress().renderingCamera;
 
+  gzerr << "camera: '" << camera->getName() << std::endl;
+
 
   Ogre::CompositorManager2 *ogreCompMgr = ogreRoot->getCompositorManager2();
 
