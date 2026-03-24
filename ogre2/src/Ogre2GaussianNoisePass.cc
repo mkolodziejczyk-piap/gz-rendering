@@ -37,6 +37,8 @@
 #include <OgreTechnique.h>
 #include <OgreVector3.h>
 
+#include <OgreCamera.h>
+
 #include <Compositor/OgreCompositorWorkspace.h>
 #include <OgreSceneManager.h>
 
