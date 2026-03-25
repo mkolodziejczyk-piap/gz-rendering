@@ -222,6 +222,18 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
 
   gzerr << "camera: '" << camera->getName() << std::endl;
 
+  double farPlane = this->camera->ogreCamera->getFarClipDistance();
+  Ogre::Vector2 projectionAB = this->camera->ogreCamera->getProjectionParamsAB();
+  double projectionA = projectionAB.x;
+  double projectionB = projectionAB.y;
+
+  gzerr << "farPlane: '" << farPlane << std::endl;
+  gzerr << "projectionA: '" << projectionA << std::endl;
+  gzerr << "projectionB: '" << projectionB << std::endl;
+
+  projectionB /= farPlane;
+
+
   Ogre::CompositorManager2 *ogreCompMgr = ogreRoot->getCompositorManager2();
 
   std::string nodeDefName = "GaussianNoiseNodeNode_"
