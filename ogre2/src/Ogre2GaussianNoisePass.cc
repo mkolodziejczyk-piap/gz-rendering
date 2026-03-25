@@ -216,20 +216,20 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
 
   Ogre::SceneManager *sceneManager = ogreRoot->getSceneManager("SceneManagerInstance1");
 
-  gzerr << "sceneManager: '" << sceneManager->getName() << std::endl;
+  gzerr << "sceneManager: " << sceneManager->getName() << std::endl;
 
   const Ogre::Camera *ogreCamera = sceneManager->getCamerasInProgress().renderingCamera;
 
-  gzerr << "camera: '" << ogreCamera->getName() << std::endl;
+  gzerr << "camera: " << ogreCamera->getName() << std::endl;
 
   double farPlane = ogreCamera->getFarClipDistance();
   Ogre::Vector2 projectionAB = ogreCamera->getProjectionParamsAB();
   double projectionA = projectionAB.x;
   double projectionB = projectionAB.y;
 
-  gzerr << "farPlane: '" << farPlane << std::endl;
-  gzerr << "projectionA: '" << projectionA << std::endl;
-  gzerr << "projectionB: '" << projectionB << std::endl;
+  gzerr << "farPlane: " << farPlane << std::endl;
+  gzerr << "projectionA: " << projectionA << std::endl;
+  gzerr << "projectionB: " << projectionB << std::endl;
 
   projectionB /= farPlane;
 
