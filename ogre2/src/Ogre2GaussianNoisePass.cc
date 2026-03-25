@@ -75,6 +75,8 @@ Ogre2GaussianNoisePass::~Ogre2GaussianNoisePass()
 
 //////////////////////////////////////////////////
 void Ogre2GaussianNoisePass::PreRender()
+// in newer versions
+// void Ogre2GaussianNoisePass::PreRender(const CameraPtr &/*_camera*/)
 {
   if (!this->dataPtr->FogMat)
     return;
@@ -203,7 +205,7 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
   // const Ogre::Camera *camera =
   //     ogreRoot->_getCurrentSceneManager()->getCamerasInProgress().renderingCamera;
 
-  // gzerr << "camera: '" << camera->getName() << std::endl;
+  gzerr << "camera: '" << ogreRoot->_getCurrentSceneManager().getName() << std::endl;
 
 
   Ogre::CompositorManager2 *ogreCompMgr = ogreRoot->getCompositorManager2();
