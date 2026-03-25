@@ -233,6 +233,7 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
 
   projectionB /= farPlane;
 
+  gzerr << "projectionB / farPlane: '" << projectionB << std::endl;  
 
   Ogre::CompositorManager2 *ogreCompMgr = ogreRoot->getCompositorManager2();
 
