@@ -207,7 +207,6 @@ void Ogre2GaussianNoisePass::CreateRenderPass()
 
   gzerr << "camera: '" << ogreRoot->_getCurrentSceneManager().getName() << std::endl;
 
-
   Ogre::CompositorManager2 *ogreCompMgr = ogreRoot->getCompositorManager2();
 
   std::string nodeDefName = "GaussianNoiseNodeNode_"
