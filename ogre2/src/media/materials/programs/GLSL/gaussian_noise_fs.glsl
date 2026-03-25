@@ -67,7 +67,15 @@ void main()
 
   // if(depth == 0.0) depth=1.0;
 
+  float r = 0.0;
+  float g = 0.0;
+  float b = 0.0;
+
+  if(depth < 1.0) r=1.0;
+  if(depth >= 1.0 && depth < 5) g=1.0;
+  if(depth >= 5) b=1.0;
+
   vec4 sceneColor = cb * sharp + (1-cb) * blur;
-	fragColor = clamp(cd * sceneColor + (1-cd) * vec4(0, 0.2, 0.4, 0.0), 0.0, 1.0);
-  // fragColor = clamp(vec4(0, 0, d, 0.0), 0.0, 1.0);
+	// fragColor = clamp(cd * sceneColor + (1-cd) * vec4(0, 0.2, 0.4, 0.0), 0.0, 1.0);
+  fragColor = clamp(vec4(r, g, b, 0.0), 0.0, 1.0);
 }
