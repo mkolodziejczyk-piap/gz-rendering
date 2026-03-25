@@ -105,6 +105,16 @@ void Ogre2GaussianNoisePass::PreRender()
   // psParams->setNamedConstant("mean", static_cast<Ogre::Real>(this->mean));
   // psParams->setNamedConstant("stddev",
   //     static_cast<Ogre::Real>(this->stdDev));
+
+  auto engine = Ogre2RenderEngine::Instance();
+  auto ogreRoot = engine->OgreRoot();
+
+  const Ogre::Camera *ogreCamera = Ogre2RenderEngine::Instance()->OgreRoot()->sceneManager->getCamerasInProgress().renderingCamera;
+
+  gzerr << "farPlane: " << ogreCamera->getFarClipDistance() << std::endl;
+  gzerr << "projectionA: " << ogreCamera->getProjectionParamsAB().x << std::endl;
+  gzerr << "projectionB: " << ogreCamera->getProjectionParamsAB().y << std::endl;
+  
 }
 
 //////////////////////////////////////////////////
