@@ -53,7 +53,7 @@ void main()
   // float depth = 1.0;
   float depth = texture(vkSampler2D(depthTexture, samplerState), inPs.uv0).x;
 
-  depth = 0.00001 / (depth + 0.00001);
+  // depth = 0.00001 / (depth + 0.00001);
   depth = 0.01 / (depth + 0.00001);
 
   vec4 sharp	= texture( vkSampler2D( RT, samplerState ), inPs.uv0 );
