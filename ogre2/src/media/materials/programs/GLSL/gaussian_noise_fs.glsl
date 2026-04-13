@@ -48,8 +48,8 @@ void main()
 {
   // float c1 = 0.0037;
   // float c2 = 0.0016;
-  float c1 = 0.2;
-  float c2 = 0.2;
+  float c1 = 0.05;
+  float c2 = 0.05;
 
   
   // float depth = 1.0;
