@@ -85,31 +85,31 @@ void OgreLidarVisual::PreRender()
 void OgreLidarVisual::Destroy()
 {
   BaseLidarVisual::Destroy();
-  for (auto ray : this->dataPtr->noHitRayStrips)
+  for (auto &ray : this->dataPtr->noHitRayStrips)
   {
     ray->Clear();
     ray.reset();
   }
 
-  for (auto ray : this->dataPtr->rayStrips)
+  for (auto &ray : this->dataPtr->rayStrips)
   {
     ray->Clear();
     ray.reset();
   }
 
-  for (auto ray : this->dataPtr->rayLines)
+  for (auto &ray : this->dataPtr->rayLines)
   {
     ray->Clear();
     ray.reset();
   }
 
-  for (auto ray : this->dataPtr->deadZoneRayFans)
+  for (auto &ray : this->dataPtr->deadZoneRayFans)
   {
     ray->Clear();
     ray.reset();
   }
 
-  for (auto ray : this->dataPtr->points)
+  for (auto &ray : this->dataPtr->points)
   {
     ray->Clear();
     ray.reset();
@@ -156,7 +156,7 @@ void OgreLidarVisual::SetPoints(const std::vector<double> &_points)
 {
   this->dataPtr->lidarPoints = _points;
   this->dataPtr->pointColors.clear();
-  for (unsigned int i = 0u; i < this->dataPtr->lidarPoints.size(); ++i)
+  for (size_t i = 0u; i < this->dataPtr->lidarPoints.size(); ++i)
   {
     this->dataPtr->pointColors.push_back(gz::math::Color::Blue);
   }

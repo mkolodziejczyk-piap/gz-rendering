@@ -138,7 +138,7 @@ void Ogre2BoundingBoxMaterialSwitcher::cameraPreRenderScene(
       // Material color
       auto customParameter = Ogre::Vector4(ogreId2, ogreId1, labelColor, 1.0);
 
-      // Multi-links models handeling
+      // Multi-links models handling
       auto itemName = visual->Name();
       std::string parentName = this->TopLevelModelVisual(visual)->Name();
 
@@ -170,7 +170,7 @@ void Ogre2BoundingBoxMaterialSwitcher::cameraPostRenderScene(
     Ogre::Camera * /*_cam*/)
 {
   // restore the original material
-  for (auto it : this->datablockMap)
+  for (auto &it : this->datablockMap)
   {
     Ogre::SubItem *subItem = it.first;
     subItem->setDatablock(it.second);

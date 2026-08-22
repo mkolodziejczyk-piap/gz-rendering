@@ -81,6 +81,11 @@ TEST_F(MeshTest, MeshSubMesh)
   submesh->SetMaterial(matClone, true);
   EXPECT_NE(matClone, submesh->Material());
 
+  // Setting the same material but do not clone
+  MaterialPtr newMatClone = submesh->Material();
+  submesh->SetMaterial(newMatClone, false);
+  EXPECT_EQ(newMatClone, submesh->Material());
+
   // Clean up
   engine->DestroyScene(scene);
 }
@@ -134,17 +139,17 @@ TEST_F(MeshTest, MeshSkeleton)
 
   int g_animIdx = 1;
   auto * skelAnim = skel->Animation(g_animIdx);
-  for (double i = 0; i < 10; i+=0.01)
+  for (double i = 0; i < 10.0; i+=0.01)
   {
-    std::map<std::string, math::Matrix4d> animFrames;
-    animFrames = skelAnim->PoseAt(i, true);
+    std::map<std::string, math::Matrix4d> animFrames =
+            skelAnim->PoseAt(i, true);
 
     std::map<std::string, math::Matrix4d> skinFrames;
 
-    for (auto pair : animFrames)
+    for (const auto &pair : animFrames)
     {
-      std::string animName = pair.first;
-      auto animTf = pair.second;
+      const auto &animName = pair.first;
+      const auto &animTf = pair.second;
 
       std::string skinName = skel->NodeNameAnimToSkin(g_animIdx, animName);
       math::Matrix4d skinTf =
@@ -308,6 +313,11 @@ TEST_F(MeshTest, MeshClone)
     compareMaterials(clonedSubMesh->Material(), originalSubMesh->Material(),
         false);
   }
+
+  // Setting the same material but do not clone
+  MaterialPtr newMatClone = clonedMesh->Material();
+  clonedMesh->SetMaterial(newMatClone, false);
+  EXPECT_EQ(newMatClone, clonedMesh->Material());
 
   // Clean up
   engine->DestroyScene(scene);

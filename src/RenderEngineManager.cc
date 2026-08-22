@@ -180,12 +180,11 @@ std::vector<std::string> RenderEngineManager::LoadedEngines() const
 {
   std::lock_guard<std::recursive_mutex> lock(this->dataPtr->enginesMutex);
   std::vector<std::string> engines;
-  for (auto [name, engine] :  // NOLINT(whitespace/braces)
-      this->dataPtr->engines)
+  for (const auto &[name, engine] : this->dataPtr->engines)
   {
-    std::string n = name;
     if (nullptr != engine)
     {
+      std::string n = name;
       // gz-rendering3 changed loaded engine names to the actual lib name.
       // For backward compatibility, return engine name if it is one of the
       // default engines
@@ -506,8 +505,12 @@ bool RenderEngineManagerPrivate::LoadEnginePlugin(
     }
   }
 
-  // Load plugin
-  auto pluginNames = this->pluginLoader.LoadLib(pathToLib);
+  // Load plugin with RTLD_NODELETE so the library and its transitive
+  // dependencies remain mapped after unloadEngine.  This avoids exhausting
+  // the glibc static-TLS surplus across repeated load/unload cycles when a
+  // transitive dependency uses thread-local storage (e.g. libgomp).  See
+  // https://github.com/gazebosim/gz-rendering/issues/1265
+  auto pluginNames = this->pluginLoader.LoadLib(pathToLib, /*_noDelete=*/true);
   if (pluginNames.empty())
   {
     gzerr << "Failed to load plugin [" << _filename <<
@@ -525,7 +528,7 @@ bool RenderEngineManagerPrivate::LoadEnginePlugin(
     error << "Found no render engine plugins in ["
           << _filename << "], available interfaces are:"
           << std::endl;
-    for (auto pluginName : pluginNames)
+    for (const auto &pluginName : pluginNames)
     {
       error << "- " << pluginName << std::endl;
     }
@@ -540,7 +543,7 @@ bool RenderEngineManagerPrivate::LoadEnginePlugin(
     warn << "Found multiple render engine plugins in ["
           << _filename << "]:"
           << std::endl;
-    for (auto pluginName : engineNames)
+    for (const auto &pluginName : engineNames)
     {
       warn << "- " << pluginName << std::endl;
     }

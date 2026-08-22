@@ -996,7 +996,7 @@ void Ogre2DepthCamera::CreateWorkspaceInstance()
       this->dataPtr->ogreCompositorWorkspace->getNodeSequence()[0];
   auto channelsTex = node->getLocalTextures();
 
-  for (auto c : channelsTex)
+  for (const auto &c : channelsTex)
   {
     if (c->getPixelFormat() == Ogre::PFG_R8_UNORM)
     {
@@ -1076,7 +1076,7 @@ void Ogre2DepthCamera::PreRender()
     colorPasses[0]->mExecutionMask =
       (this->dataPtr->newRgbPointCloud.ConnectionCount() > 0u) ?
       ~this->dataPtr->kDepthExecutionMask :this->dataPtr->kDepthExecutionMask;
-    for (unsigned int i = 1; i < colorPasses.size(); ++i)
+    for (size_t i = 1; i < colorPasses.size(); ++i)
     {
       colorPasses[i]->mExecutionMask =
           (this->dataPtr->newRgbPointCloud.ConnectionCount() > 0u) ?
@@ -1133,7 +1133,7 @@ void Ogre2DepthCamera::PreRender()
         this->dataPtr->ogreCompositorWorkspace->getNodeSequence()[0];
     auto channelsTex = node->getLocalTextures();
 
-    for (auto c : channelsTex)
+    for (const auto &c : channelsTex)
     {
       if (c->getPixelFormat() == Ogre::PFG_RGB8_UNORM)
       {

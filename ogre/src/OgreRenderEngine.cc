@@ -28,6 +28,7 @@
   #include <Winsock2.h>
 #endif
 
+# include <filesystem>
 # include <sstream>
 
 #include <gz/plugin/Register.hh>
@@ -83,7 +84,30 @@ OgreRenderEngine::OgreRenderEngine() :
 
   const char *env = std::getenv("OGRE_RESOURCE_PATH");
   if (env)
-    this->ogrePaths.push_back(std::string(env));
+  {
+    std::string envPath(env);
+    // Avoid loading plugins twice when the OGRE_RESOURCE_PATH env var points
+    // to the same directory as the compile-time OGRE_RESOURCE_PATH. Loading
+    // RenderSystem_GL.dll twice creates two GL render system instances that
+    // cause a crash when the OGRE root is destroyed
+    // (https://github.com/gazebosim/gz-rendering/issues/1107).
+    bool duplicate = false;
+    try
+    {
+      duplicate = std::filesystem::equivalent(
+          std::filesystem::path(envPath),
+          std::filesystem::path(OGRE_RESOURCE_PATH));
+    }
+    catch (const std::filesystem::filesystem_error &)
+    {
+      // equivalent() throws if either path does not exist. Fall back to a
+      // textual comparison in that case so we still catch the common
+      // "same dir, different slash style" scenario on Windows.
+      duplicate = (envPath == std::string(OGRE_RESOURCE_PATH));
+    }
+    if (!duplicate)
+      this->ogrePaths.push_back(envPath);
+  }
 }
 
 //////////////////////////////////////////////////
@@ -479,7 +503,6 @@ void OgreRenderEngine::LoadPlugins()
 //////////////////////////////////////////////////
 void OgreRenderEngine::CreateRenderSystem()
 {
-  Ogre::RenderSystem *renderSys;
   const Ogre::RenderSystemList *rsList;
 
   // Set parameters of render system (window size, etc.)
@@ -491,7 +514,7 @@ void OgreRenderEngine::CreateRenderSystem()
 
   int c = 0;
 
-  renderSys = nullptr;
+  Ogre::RenderSystem *renderSys = nullptr;
 
   do
   {
@@ -505,13 +528,14 @@ void OgreRenderEngine::CreateRenderSystem()
   // (it thinks the while loop is empty), so we must put the whole while
   // statement on one line and add NOLINT at the end so that cpplint doesn't
   // complain about the line being too long
-  while (renderSys && renderSys->getName().compare("OpenGL Rendering Subsystem") != 0); // NOLINT
+  while (renderSys && renderSys->getName() != "OpenGL Rendering Subsystem"); // NOLINT
 
   if (renderSys == nullptr)
   {
     gzerr << "unable to find OpenGL rendering system. OGRE is probably "
             "installed incorrectly. Double check the OGRE cmake output, "
             "and make sure OpenGL is enabled." << std::endl;
+    return;
   }
 
   // We operate in windowed mode
@@ -644,7 +668,6 @@ std::string OgreRenderEngine::CreateRenderWindow(const std::string &_handle,
     const unsigned int _width, const unsigned int _height,
     const double _ratio, const unsigned int _antiAliasing)
 {
-  Ogre::StringVector paramsVector;
   Ogre::NameValuePairList params;
   Ogre::RenderWindow *window = nullptr;
 

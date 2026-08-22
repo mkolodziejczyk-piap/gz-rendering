@@ -29,8 +29,8 @@
 
 #include <gz/utils/ExtraTestMacros.hh>
 
-#define DEPTH_TOL 1e-4
-#define DOUBLE_TOL 1e-6
+constexpr double DEPTH_TOL = 1e-4;
+constexpr double DOUBLE_TOL = 1e-6;
 
 unsigned int g_depthCounter = 0;
 unsigned int g_pointCloudCounter = 0;
@@ -41,9 +41,12 @@ void OnNewDepthFrame(float *_scanDest, const float *_scan,
                   unsigned int _channels,
                   const std::string &/*_format*/)
 {
-  float f;
-  int size =  _width * _height * _channels;
-  memcpy(_scanDest, _scan, size * sizeof(f));
+  EXPECT_EQ(256u, _width);
+  EXPECT_EQ(256u, _height);
+  EXPECT_EQ(1u, _channels);
+
+  const auto size = _width * _height * _channels;
+  memcpy(_scanDest, _scan, size * sizeof(float));
   g_depthCounter++;
 }
 
@@ -53,9 +56,12 @@ void OnNewRgbPointCloud(float *_scanDest, const float *_scan,
                   unsigned int _channels,
                   const std::string &/*_format*/)
 {
-  float f;
-  int size =  _width * _height * _channels;
-  memcpy(_scanDest, _scan, size * sizeof(f));
+  EXPECT_EQ(256u, _width);
+  EXPECT_EQ(256u, _height);
+  EXPECT_EQ(4u, _channels);
+
+  const auto size = _width * _height * _channels;
+  memcpy(_scanDest, _scan, size * sizeof(float));
   g_pointCloudCounter++;
 }
 
@@ -410,7 +416,8 @@ TEST_F(DepthCameraTest, GZ_UTILS_TEST_DISABLED_ON_WIN32(DepthCameraBoxes))
       // all points should have the same depth value
       EXPECT_FLOAT_EQ(expectedRange, scan[mid]);
       EXPECT_FLOAT_EQ(expectedRange, scan[left]);
-      EXPECT_FLOAT_EQ(expectedRange, scan[right]);
+      // Used a slightly higher tol for ogre1.x on arm-based mac
+      EXPECT_NEAR(expectedRange, scan[right], 1e-6);
     }
     // Verify Point Cloud XYZ
     {

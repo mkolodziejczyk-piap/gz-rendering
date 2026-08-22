@@ -87,7 +87,7 @@ class gz::rendering::Ogre2Projector::Implementation
   /// \brief Decal - Texture projected onto a surface
   public: Ogre::Decal *decal{nullptr};
 
-  /// \brief Indicate whether the projector is intialized or not
+  /// \brief Indicate whether the projector is initialized or not
   public: bool initialized{false};
 
   /// \brief A map of cameras (<Camera ptr, name>) that the listener has been
@@ -171,9 +171,9 @@ void Ogre2Projector::UpdateCameraListener()
     this->dataPtr->decalNode->getCreator()->setDecalsEmissive(
         this->dataPtr->decal->getEmissiveTexture());
 
-    for (auto &ogreCamIt : this->dataPtr->camerasWithListener)
+    for (const auto &ogreCamIt : this->dataPtr->camerasWithListener)
     {
-      Ogre::IdString camName = ogreCamIt.second;
+      const Ogre::IdString &camName = ogreCamIt.second;
       // instead of getting the camera pointer through ogreCamIt.first,
       // find camera pointer again to make sure the camera still exists
       // because there is a chance that we are holding onto a dangling pointer
