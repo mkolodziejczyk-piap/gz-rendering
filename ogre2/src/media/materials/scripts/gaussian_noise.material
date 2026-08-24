@@ -78,6 +78,7 @@ fragment_program GaussianNoiseFS unified
   {
     // param_named mean float 0.0
     // param_named stddev float 1.0
+    param_named waterDensity float 0.05
     param_named waterColor float3 0.0 0.0 0.0
   }
 }

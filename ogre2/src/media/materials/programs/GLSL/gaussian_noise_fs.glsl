@@ -34,6 +34,7 @@ vulkan( layout( ogre_s0 ) uniform sampler samplerState );
 // vulkan( }; )
 
 vulkan( layout( ogre_P0 ) uniform Params { )
+  uniform float waterDensity;
 	uniform vec3 waterColor;
 vulkan( }; )
 
@@ -52,7 +53,7 @@ void main()
 {
   // float c1 = 0.0037;
   // float c2 = 0.0016;
-  float c1 = 0.05;
+  float c1 = waterDensity;
   float c2 = 0.05;
 
   
@@ -83,7 +84,7 @@ void main()
   // if(depth >= 2.0 && depth < 10.0) b=1.0;
 
   vec4 sceneColor = cb * sharp + (1-cb) * blur;
-	fragColor = clamp(cd * sceneColor + (1-cd) * vec4(0, 0.3, 0.4, 0.0), 0.0, 1.0);
+	// fragColor = clamp(cd * sceneColor + (1-cd) * vec4(0, 0.3, 0.4, 0.0), 0.0, 1.0);
   fragColor = clamp(cd * sceneColor + (1-cd) * vec4(waterColor.x, waterColor.y, waterColor.z, 0.0), 0.0, 1.0);
   // fragColor = clamp(vec4(r, g, b, 0.0), 0.0, 1.0);
 }

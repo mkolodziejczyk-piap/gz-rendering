@@ -52,6 +52,8 @@ namespace gz
       // Documentation inherited.
       public: double Bias() const override;
 
+      public: double WaterDensity() const override;
+
       // Documentation inherited.
       public: void SetMean(double _mean) override;
 
@@ -63,6 +65,8 @@ namespace gz
 
       // Documentation inherited.
       public: void SetBiasStdDev(double _biasStdDev) override;
+
+      public: void SetWaterDensity(double _waterDensity) override;      
 
       // Sample the bias from bias mean and bias standard deviation
       protected: void SampleBias();
@@ -83,6 +87,8 @@ namespace gz
       /// \brief The standard deviation of the Gaussian distribution from
       /// which bias values are drawn.
       protected: double biasStdDev = 0;
+
+      protected: double waterDensity = 0;
     };
 
     //////////////////////////////////////////////////
@@ -122,6 +128,13 @@ namespace gz
 
     //////////////////////////////////////////////////
     template <class T>
+    double BaseGaussianNoisePass<T>::WaterDensity() const
+    {
+      return this->waterDensity;
+    }
+
+    //////////////////////////////////////////////////
+    template <class T>
     void BaseGaussianNoisePass<T>::SetMean(double _mean)
     {
       this->mean = _mean;
@@ -150,6 +163,12 @@ namespace gz
       this->SampleBias();
     }
 
+    //////////////////////////////////////////////////
+    template <class T>
+    void BaseGaussianNoisePass<T>::SetWaterDensity(double _waterDensity)
+    {
+      this->waterDensity = _waterDensity;
+    }
     //////////////////////////////////////////////////
     template <class T>
     void BaseGaussianNoisePass<T>::SampleBias()

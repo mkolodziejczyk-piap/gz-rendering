@@ -53,6 +53,8 @@ namespace gz
       /// \return Bias on output.
       public: virtual double Bias() const = 0;
 
+      public: virtual double WaterDensity() const = 0;
+
       /// \brief Set mean.
       /// \param[in] _mean Mean of Gaussian noise.
       public: virtual void SetMean(double _mean) = 0;
@@ -70,6 +72,8 @@ namespace gz
       /// based on the bias mean and bias standard deviation.
       /// \sa SetBiasMean
       public: virtual void SetBiasStdDev(double _biasStdDev) = 0;
+
+      public: virtual void SetWaterDensity(double _waterDensity) = 0;      
     };
     }
   }
