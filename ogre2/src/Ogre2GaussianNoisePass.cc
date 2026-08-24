@@ -99,7 +99,7 @@ void Ogre2GaussianNoisePass::PreRender()
   //    fragment_program GaussianNoiseFS
   // 2. media/materials/scripts/gaussian_noise_fs.glsl
   Ogre::Pass *pass =
-      this->dataPtr->gaussianNoiseMat->getTechnique(0)->getPass(0);
+      this->dataPtr->FogMat->getTechnique(0)->getPass(0);
   Ogre::GpuProgramParametersSharedPtr psParams =
       pass->getFragmentProgramParameters();
   psParams->setNamedConstant("waterColor", water_color);
