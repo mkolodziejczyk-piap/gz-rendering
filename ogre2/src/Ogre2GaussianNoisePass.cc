@@ -104,7 +104,7 @@ void Ogre2GaussianNoisePass::PreRender()
   Ogre::GpuProgramParametersSharedPtr psParams =
       pass->getFragmentProgramParameters();
   psParams->setNamedConstant("waterColor", water_color);
-  psParams->setNamedConstant("waterDensity", static_cast<Ogre::Real>(this->water_density));
+  psParams->setNamedConstant("waterDensity", static_cast<Ogre::Real>(this->waterDensity));
   // psParams->setNamedConstant("mean", static_cast<Ogre::Real>(this->mean));
   // psParams->setNamedConstant("stddev",
   //     static_cast<Ogre::Real>(this->stdDev));
