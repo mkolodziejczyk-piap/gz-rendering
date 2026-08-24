@@ -111,9 +111,9 @@ void Ogre2GaussianNoisePass::PreRender()
 
   const Ogre::Camera *ogreCamera = Ogre2RenderEngine::Instance()->OgreRoot()->getSceneManager("SceneManagerInstance1")->getCamerasInProgress().renderingCamera;
 
-  gzerr << "farPlane: " << ogreCamera->getFarClipDistance() << std::endl;
-  gzerr << "projectionA: " << ogreCamera->getProjectionParamsAB().x << std::endl;
-  gzerr << "projectionB: " << ogreCamera->getProjectionParamsAB().y << std::endl;
+  // gzerr << "farPlane: " << ogreCamera->getFarClipDistance() << std::endl;
+  // gzerr << "projectionA: " << ogreCamera->getProjectionParamsAB().x << std::endl;
+  // gzerr << "projectionB: " << ogreCamera->getProjectionParamsAB().y << std::endl;
 
 }
 
