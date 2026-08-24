@@ -90,18 +90,19 @@ void Ogre2GaussianNoisePass::PreRender()
   // Sample three values within the range [0,1.0] and set them for use in
   // the fragment shader, which will interpret them as offsets from (0,0)
   // to use when computing pseudo-random values.
-  Ogre::Vector3 offsets(math::Rand::DblUniform(0.0, 1.0),
-                        math::Rand::DblUniform(0.0, 1.0),
-                        math::Rand::DblUniform(0.0, 1.0));
+  // Ogre::Vector3 offsets(math::Rand::DblUniform(0.0, 1.0),
+  //                       math::Rand::DblUniform(0.0, 1.0),
+  //                       math::Rand::DblUniform(0.0, 1.0));
+  Ogre::Vector3 water_color(0, 0.3, 0.4);
   // These calls are setting parameters that are declared in two places:
   // 1. media/materials/scripts/gaussian_noise.material, in
   //    fragment_program GaussianNoiseFS
   // 2. media/materials/scripts/gaussian_noise_fs.glsl
-  // Ogre::Pass *pass =
-  //     this->dataPtr->gaussianNoiseMat->getTechnique(0)->getPass(0);
-  // Ogre::GpuProgramParametersSharedPtr psParams =
-  //     pass->getFragmentProgramParameters();
-  // psParams->setNamedConstant("offsets", offsets);
+  Ogre::Pass *pass =
+      this->dataPtr->gaussianNoiseMat->getTechnique(0)->getPass(0);
+  Ogre::GpuProgramParametersSharedPtr psParams =
+      pass->getFragmentProgramParameters();
+  psParams->setNamedConstant("waterColor", water_color);
   // psParams->setNamedConstant("mean", static_cast<Ogre::Real>(this->mean));
   // psParams->setNamedConstant("stddev",
   //     static_cast<Ogre::Real>(this->stdDev));

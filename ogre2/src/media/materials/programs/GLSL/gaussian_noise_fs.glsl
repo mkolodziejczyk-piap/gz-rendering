@@ -33,6 +33,10 @@ vulkan( layout( ogre_s0 ) uniform sampler samplerState );
 // 	uniform float BlurWeight;
 // vulkan( }; )
 
+vulkan( layout( ogre_P0 ) uniform Params { )
+	uniform vec3 waterColor;
+vulkan( }; )
+
 // input params from vertex shader
 vulkan_layout( location = 0 )
 in block
@@ -80,5 +84,6 @@ void main()
 
   vec4 sceneColor = cb * sharp + (1-cb) * blur;
 	fragColor = clamp(cd * sceneColor + (1-cd) * vec4(0, 0.3, 0.4, 0.0), 0.0, 1.0);
+  fragColor = clamp(cd * sceneColor + (1-cd) * vec4(waterColor.x, waterColor.y, waterColor.z, 0.0), 0.0, 1.0);
   // fragColor = clamp(vec4(r, g, b, 0.0), 0.0, 1.0);
 }
