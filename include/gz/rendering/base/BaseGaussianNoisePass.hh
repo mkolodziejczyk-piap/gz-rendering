@@ -148,14 +148,14 @@ namespace gz
 
     //////////////////////////////////////////////////
     template <class T>
-    double* BaseGaussianNoisePass<T>::GreeColor() const
+    double BaseGaussianNoisePass<T>::GreenColor() const
     {
       return this->greenColor;
     }
 
     //////////////////////////////////////////////////
     template <class T>
-    double* BaseGaussianNoisePass<T>::BlueColor() const
+    double BaseGaussianNoisePass<T>::BlueColor() const
     {
       return this->blueColor;
     }
