@@ -141,6 +141,13 @@ namespace gz
 
     //////////////////////////////////////////////////
     template <class T>
+    double* BaseGaussianNoisePass<T>::WaterColor() const
+    {
+      return this->waterColor;
+    }
+
+    //////////////////////////////////////////////////
+    template <class T>
     void BaseGaussianNoisePass<T>::SetMean(double _mean)
     {
       this->mean = _mean;
@@ -174,6 +181,12 @@ namespace gz
     void BaseGaussianNoisePass<T>::SetWaterDensity(double _waterDensity)
     {
       this->waterDensity = _waterDensity;
+    }
+    //////////////////////////////////////////////////
+    template <class T>
+    void BaseGaussianNoisePass<T>::SetWaterColor(double* _waterColor)
+    {
+      this->waterColor = _waterColor;
     }
     //////////////////////////////////////////////////
     template <class T>
