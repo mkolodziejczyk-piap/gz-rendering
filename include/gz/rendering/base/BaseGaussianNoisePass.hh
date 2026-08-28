@@ -94,7 +94,8 @@ namespace gz
 
       protected: double waterDensity = 0;
 
-      protected: double waterColor[3] = {0, 0, 0};
+      // protected: double waterColor[3] = {0, 0, 0};
+      protected: double* waterColor = {0, 0, 0};
     };
 
     //////////////////////////////////////////////////
