@@ -70,7 +70,7 @@ namespace gz
 
       public: void SetWaterDensity(double _waterDensity) override;
 
-      public: void SetWaterColor(double[3] _waterColor) override;      
+      public: void SetWaterColor(double* _waterColor) override;      
 
       // Sample the bias from bias mean and bias standard deviation
       protected: void SampleBias();
