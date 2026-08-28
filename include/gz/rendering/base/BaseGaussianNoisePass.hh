@@ -54,6 +54,8 @@ namespace gz
 
       public: double WaterDensity() const override;
 
+      public: double WaterColor() const override;
+
       // Documentation inherited.
       public: void SetMean(double _mean) override;
 
@@ -66,7 +68,9 @@ namespace gz
       // Documentation inherited.
       public: void SetBiasStdDev(double _biasStdDev) override;
 
-      public: void SetWaterDensity(double _waterDensity) override;      
+      public: void SetWaterDensity(double _waterDensity) override;
+
+      public: void SetWaterColor(double[3] _waterColor) override;      
 
       // Sample the bias from bias mean and bias standard deviation
       protected: void SampleBias();
@@ -89,6 +93,8 @@ namespace gz
       protected: double biasStdDev = 0;
 
       protected: double waterDensity = 0;
+
+      protected: double[3] waterColor = {0, 0, 0};
     };
 
     //////////////////////////////////////////////////
