@@ -54,7 +54,8 @@ namespace gz
 
       public: double WaterDensity() const override;
 
-      public: double* WaterColor() const override;
+      public: double GreenColor() const override;
+      public: double BlueColor() const override;
 
       // Documentation inherited.
       public: void SetMean(double _mean) override;
@@ -70,7 +71,8 @@ namespace gz
 
       public: void SetWaterDensity(double _waterDensity) override;
 
-      public: void SetWaterColor(double* _waterColor) override;      
+      public: void SetGreenColor(double _greenColor) override;
+      public: void SetBlueColor(double _blueColor) override;       
 
       // Sample the bias from bias mean and bias standard deviation
       protected: void SampleBias();
@@ -94,8 +96,12 @@ namespace gz
 
       protected: double waterDensity = 0;
 
+      protected: double greenColor = 0;
+      protected: double blueColor = 0;
+
       // protected: double waterColor[3] = {0, 0, 0};
-      protected: double* waterColor = {0, 0, 0};
+      // protected: double* waterColor = {0, 0, 0};
+
     };
 
     //////////////////////////////////////////////////
@@ -142,9 +148,16 @@ namespace gz
 
     //////////////////////////////////////////////////
     template <class T>
-    double* BaseGaussianNoisePass<T>::WaterColor() const
+    double* BaseGaussianNoisePass<T>::GreeColor() const
     {
-      return this->waterColor;
+      return this->greenColor;
+    }
+
+    //////////////////////////////////////////////////
+    template <class T>
+    double* BaseGaussianNoisePass<T>::BlueColor() const
+    {
+      return this->blueColor;
     }
 
     //////////////////////////////////////////////////
@@ -185,10 +198,16 @@ namespace gz
     }
     //////////////////////////////////////////////////
     template <class T>
-    void BaseGaussianNoisePass<T>::SetWaterColor(double* _waterColor)
+    void BaseGaussianNoisePass<T>::SetGreenColor(double _greenColor)
     {
-      this->waterColor = _waterColor;
+      this->greenColor = _greenColor;
     }
+    //////////////////////////////////////////////////
+    template <class T>
+    void BaseGaussianNoisePass<T>::SetBlueColor(double _blueColor)
+    {
+      this->blueColor = _blueColor;
+    }    
     //////////////////////////////////////////////////
     template <class T>
     void BaseGaussianNoisePass<T>::SampleBias()

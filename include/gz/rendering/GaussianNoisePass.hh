@@ -55,7 +55,8 @@ namespace gz
 
       public: virtual double WaterDensity() const = 0;
 
-      public: virtual double* WaterColor() const = 0;      
+      public: virtual double GreenColor() const = 0;
+      public: virtual double BlueColor() const = 0;      
 
       /// \brief Set mean.
       /// \param[in] _mean Mean of Gaussian noise.
@@ -77,7 +78,8 @@ namespace gz
 
       public: virtual void SetWaterDensity(double _waterDensity) = 0;
 
-      public: virtual void SetWaterColor(double* _waterColor) = 0;      
+      public: virtual void SetGreenColor(double _greenColor) = 0;
+      public: virtual void SetBlueColor(double _blueColor) = 0;      
     };
     }
   }
