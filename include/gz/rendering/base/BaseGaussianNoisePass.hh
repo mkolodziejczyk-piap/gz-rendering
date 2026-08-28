@@ -54,7 +54,7 @@ namespace gz
 
       public: double WaterDensity() const override;
 
-      public: double WaterColor() const override;
+      public: double* WaterColor() const override;
 
       // Documentation inherited.
       public: void SetMean(double _mean) override;
