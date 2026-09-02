@@ -94,8 +94,8 @@ void Ogre2GaussianNoisePass::PreRender()
   //                       math::Rand::DblUniform(0.0, 1.0),
   //                       math::Rand::DblUniform(0.0, 1.0));
   // Ogre::Vector3 water_color(0, 0.3+math::Rand::DblUniform(0.0, 1.0), 0.4+math::Rand::DblUniform(0.0, 1.0));
-  Ogre::Vector3 water_color(0, 0.3, 0.4);
-  // Ogre::Vector3 water_color(0, this->greenColor, this->blueColor);
+  // Ogre::Vector3 water_color(0, 0.3, 0.4);
+  Ogre::Vector3 water_color(0, this->greenColor, this->blueColor);
   // These calls are setting parameters that are declared in two places:
   // 1. media/materials/scripts/gaussian_noise.material, in
   //    fragment_program GaussianNoiseFS
@@ -106,8 +106,8 @@ void Ogre2GaussianNoisePass::PreRender()
       pass->getFragmentProgramParameters();
   psParams->setNamedConstant("waterColor", water_color);
   // psParams->setNamedConstant("waterColor", static_cast<Ogre::Vector3>());
-  // psParams->setNamedConstant("waterDensity", static_cast<Ogre::Real>(this->waterDensity));
-  psParams->setNamedConstant("waterDensity", static_cast<Ogre::Real>(0.05));
+  psParams->setNamedConstant("waterDensity", static_cast<Ogre::Real>(this->waterDensity));
+  // psParams->setNamedConstant("waterDensity", static_cast<Ogre::Real>(0.05));
   // psParams->setNamedConstant("mean", static_cast<Ogre::Real>(this->mean));
   // psParams->setNamedConstant("stddev",
   //     static_cast<Ogre::Real>(this->stdDev));
